@@ -1,0 +1,42 @@
+# implementing a deck of cards using OOP with some basic, ready-to-use operations
+
+
+import random
+
+class Card:
+    def __init__(self, suit, value):
+        self.suit = suit
+        self.value = value
+    
+    def present(self):
+        return self.value+' of '+self.suit
+
+class Deck:
+    def __init__(self):
+        suits = ['hearts', 'diamonds', 'clubs', 'spades']
+        values = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']
+        
+        self.cards = [Card(s, v) for s in suits for v in values]
+        
+    def shuffle(self):
+        return random.shuffle(self.cards)
+    
+    def deal(self):
+        if len(self.cards) > 0:
+            return self.cards.pop()
+        return None
+    
+    def count_remaining(self):
+        return len(self.cards)
+    
+    def get_remaining(self):
+        return [i.present() for i in self.cards]
+            
+
+deck = Deck()
+deck.shuffle()
+
+dealt_card = deck.deal()
+print(f"Dealt: {dealt_card.present()}")
+print(f"Cards left: {deck.count_remaining()}")
+
