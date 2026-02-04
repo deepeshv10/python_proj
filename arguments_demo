@@ -1,0 +1,20 @@
+# Arguments demo in Python 
+
+def arguments_demo(a, b, *args, **kwargs):
+    print(a, b) # print a & b
+    for i in args:      # args is a Tuple
+        print(i)
+    for key in kwargs:  # kwargs is a dictionary
+        print(key, kwargs[key])
+
+arguments_demo(1,2,3,4,5,name='deepesh',city='mumbai')
+
+'''
+output:
+1 2
+3
+4
+5
+name deepesh
+city mumbai
+'''
