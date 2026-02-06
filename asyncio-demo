@@ -1,0 +1,51 @@
+# this program demonstrates the asyncio tasks. 
+# here we are creating 2 tasks that are gonna take different times to complete. 
+# We create those tasks that run independently and then return to main where we complete steps and print results
+
+
+import time
+import asyncio
+
+async def do_something(obj):
+    print(f"Invoking.. {obj}")
+    await asyncio.sleep(obj)
+    print(f"Done with {obj}")
+    return f"Result of {obj}"
+
+async def main():
+    print("Starting the main function")
+    print("Creating task1")
+    task1 = asyncio.create_task(do_something(5))
+    print("Creating task2")
+    task2 = asyncio.create_task(do_something(2))
+    result1 = await task1
+    print(f"Done with task1")
+    result2 = await task2
+    print(f"Done with task2")
+    return [result1, result2]
+
+t1 = time.perf_counter()
+
+results = asyncio.run(main())
+print(results)
+
+t2 = time.perf_counter()
+
+
+print(f"Completed in {t2 - t1:.2f} sec")
+
+
+'''
+output :
+Starting the main function
+Creating task1
+Creating task2
+Invoking.. 5
+Invoking.. 2
+Done with 2
+Done with 5
+Done with task1
+Done with task2
+['Result of 5', 'Result of 2']
+Completed in 5.02 sec
+'''
