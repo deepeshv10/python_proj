@@ -7,6 +7,7 @@
 
 
 
+
 from collections import OrderedDict
 import time
 
@@ -57,11 +58,11 @@ class StockPriceCache:
     def get_price(self, symbol):
         if symbol is not None and symbol in self.cache:
             self.cache.move_to_end(symbol)
-            print("cache hit, current cache: ", self.cache)
+            return f"{symbol} - cache hit, current cache: {self.cache}"
         else:
             price = slow_stock_price_api(symbol)
             self.put_symbol(symbol, price)
-            print("cache miss, current cache: ", self.cache)
+            return f"{symbol} - cache miss, current cache: {self.cache}"
 
 stockpricecache = StockPriceCache(capacity=3)
 print(stockpricecache.get_price("AAPL"))
@@ -70,3 +71,11 @@ print(stockpricecache.get_price("AAPL"))
 print(stockpricecache.get_price("MSFT"))
 print(stockpricecache.get_price("AMZN"))
 print(stockpricecache.get_price("TSLA"))
+
+# expected Output :
+# AAPL - cache miss, current cache: OrderedDict([('AAPL', 150.75)])
+# GOOG - cache miss, current cache: OrderedDict([('AAPL', 150.75), ('GOOG', 2820.12)])
+# AAPL - cache hit, current cache: OrderedDict([('GOOG', 2820.12), ('AAPL', 150.75)])
+# MSFT - cache miss, current cache: OrderedDict([('GOOG', 2820.12), ('AAPL', 150.75), ('MSFT', 235.77)])
+# AMZN - cache miss, current cache: OrderedDict([('AAPL', 150.75), ('MSFT', 235.77), ('AMZN', 3384.12)])
+# TSLA - cache miss, current cache: OrderedDict([('MSFT', 235.77), ('AMZN', 3384.12), ('TSLA', 822.12)])
