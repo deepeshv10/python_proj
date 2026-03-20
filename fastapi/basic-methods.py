@@ -64,7 +64,7 @@ def update_items(item_id: int, item: Item):
         return {f"Item {item_id} does not exists"}
 
 @app.delete("/items/{item_id}")
-def update_items(item_id: int):
+def delete_items(item_id: int):
     """
     Allows deleting items from the db (dictionary)
     takes item_id from the request payload
@@ -75,3 +75,4 @@ def update_items(item_id: int):
         return {f"Item {item_id} deleted"}
     else:
         return {f"Item {item_id} does not exists"}
+
