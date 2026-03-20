@@ -5,3 +5,5 @@ app = FastAPI()
 @app.get("/hello")
 def say_hello():
     return {"data": "Hello! from FatsAPI"}
+
+
