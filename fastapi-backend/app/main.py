@@ -12,6 +12,11 @@ def get_products(
         default="",
         min_length=3,
         examples="Smartphone",
+        description="The name of the product"),
+    category: str = Query(
+        default="",
+        min_length=3,
+        examples="Smartphone",
         description="The name of the product")
     ):
     """
