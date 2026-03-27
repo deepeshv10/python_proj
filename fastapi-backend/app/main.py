@@ -10,16 +10,23 @@ from service.products import (
     update_product,
     delete_product,
 )
+from service.orders import (
+    Order,
+    OrderCreate,
+    get_all_orders,
+    get_order_by_id,
+    create_order,
+)
 
 app = FastAPI()
 
 
 @app.get("/health")
-def health_check():
+def root():
     return {"status": "ok"}
 
 
-@app.get("/products/", response_model=list[Product])
+@app.get("/products/")
 def search_products(
     name: str = Query(
         default="",
@@ -31,10 +38,10 @@ def search_products(
     products = get_products_by_name(name)
     if not products:
         raise HTTPException(status_code=404, detail=f"No products matching '{name}'")
-    return products
+    return { "total products": len(products), "products": products}
 
 
-@app.get("/products/{product_id}", response_model=Product)
+@app.get("/products/{product_id}")
 def get_product(product_id: int):
     product = get_product_by_id(product_id)
     if not product:
@@ -61,3 +68,28 @@ def remove_product(product_id: int):
     if not product:
         raise HTTPException(status_code=404, detail=f"Product {product_id} not found")
     return product
+
+
+# ── Orders ───────────────────────────────────────────────────────────
+
+
+@app.get("/orders/", response_model=list[Order])
+def list_orders():
+    return get_all_orders()
+
+
+@app.get("/orders/{order_id}", response_model=Order)
+def get_order(order_id: int):
+    order = get_order_by_id(order_id)
+    if not order:
+        raise HTTPException(status_code=404, detail=f"Order {order_id} not found")
+    return order
+
+
+@app.post("/orders/", response_model=Order, status_code=201)
+def place_order(data: OrderCreate):
+    try:
+        return create_order(data)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
