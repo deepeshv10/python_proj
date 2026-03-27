@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Depends
 from service.products import (
     Product,
     ProductCreate,
@@ -20,10 +20,12 @@ from service.orders import (
 
 app = FastAPI()
 
+def say_hello():
+    return "Welcome to my Fastapi app"
 
 @app.get("/health")
-def root():
-    return {"status": "ok"}
+def root(depends=Depends(say_hello)):       # example of dependency injection
+    return {"status": f"{depends}. App is ok"}
 
 
 @app.get("/products/")
