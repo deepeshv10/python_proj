@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, Query, Depends
+from fastapi import FastAPI, HTTPException, Query, Depends, status
+import asyncio
 from service.products import (
     Product,
     ProductCreate,
@@ -24,12 +25,12 @@ def say_hello():
     return "Welcome to my Fastapi app"
 
 @app.get("/health")
-def root(depends=Depends(say_hello)):       # example of dependency injection
+async def root(depends=Depends(say_hello)):       # example of dependency injection
     return {"status": f"{depends}. App is ok"}
 
 
-@app.get("/products/")
-def search_products(
+@app.get("/products/", status_code=status.HTTP_200_OK)
+async def search_products(
     name: str = Query(
         default="",
         min_length=3,

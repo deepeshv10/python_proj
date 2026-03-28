@@ -126,3 +126,4 @@ def delete_product(product_id: int) -> Optional[Product]:
             _save_products()
             return removed
     return None
+

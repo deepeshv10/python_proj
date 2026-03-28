@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": 1,
+    "product_id": 3,
+    "quantity": 5,
+    "total_price": 1745.0,
+    "status": "pending",
+    "created_at": "2026-03-28T15:43:49.819629+00:00",
+    "updated_at": "2026-03-28T15:43:49.819629+00:00"
+  },
+  {
+    "id": 2,
+    "product_id": 3,
+    "quantity": 35,
+    "total_price": 12215.0,
+    "status": "pending",
+    "created_at": "2026-03-28T15:53:27.523674+00:00",
+    "updated_at": "2026-03-28T15:53:27.523674+00:00"
+  }
+]
