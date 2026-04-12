@@ -19,7 +19,9 @@ from service.orders import (
     create_order,
 )
 
-app = FastAPI()
+app = FastAPI(
+    title="e-comm app in fastapi"
+)
 
 def say_hello():
     return "Welcome to my Fastapi app"
